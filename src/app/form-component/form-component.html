@@ -1,0 +1,45 @@
+<!-- Angular provides a few modules to allow template driven forms.   -->
+<!-- ngForm is used to track the value and validity of the form. It is a built-in directive that is available in the FormsModule -->
+<!-- ngSubmit is a directive that Angular provides to handle form submission. It is used to bind the form submission event to a method in our component -->
+<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+  <div class="mb-3">
+    <label for="email" class="form-label">Email address</label>
+    <!-- ngModel is a directive used to create a formControl. It is used track the value and validity of the input field. -->
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      name="email"
+      aria-describedby="emailHelp"
+      ngModel
+    />
+    <div id="emailHelp" class="form-text">
+      We'll never share your email with anyone else.
+    </div>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input
+      type="password"
+      class="form-control"
+      id="password"
+      name="password"
+      ngModel
+    />
+  </div>
+  <div class="mb-3 form-check">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="newsletter"
+      name="subscribe"
+      ngModel
+    />
+    <label class="form-check-label" for="newsletter"
+      >Subscribe to a newsletter</label
+    >
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<pre>{{ loginForm.value | json }}</pre>
