@@ -1,7 +1,7 @@
 <!-- Angular provides a few modules to allow template driven forms.   -->
 <!-- ngForm is used to track the value and validity of the form. It is a built-in directive that is available in the FormsModule -->
 <!-- ngSubmit is a directive that Angular provides to handle form submission. It is used to bind the form submission event to a method in our component -->
-<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+<form #loginForm="ngForm" (ngSubmit)="onSubmit()">
   <div class="mb-3">
     <label for="email" class="form-label">Email address</label>
     <!-- ngModel is a directive used to create a formControl. It is used track the value and validity of the input field. -->
@@ -11,7 +11,7 @@
       id="email"
       name="email"
       aria-describedby="emailHelp"
-      ngModel
+      [(ngModel)]="person.email"
     />
     <div id="emailHelp" class="form-text">
       We'll never share your email with anyone else.
@@ -24,7 +24,7 @@
       class="form-control"
       id="password"
       name="password"
-      ngModel
+      [(ngModel)]="person.password"
     />
   </div>
   <div class="mb-3 form-check">
@@ -33,7 +33,7 @@
       class="form-check-input"
       id="newsletter"
       name="subscribe"
-      ngModel
+      [(ngModel)]="person.subscribe"
     />
     <label class="form-check-label" for="newsletter"
       >Subscribe to a newsletter</label
