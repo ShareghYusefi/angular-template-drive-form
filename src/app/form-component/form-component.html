@@ -1,10 +1,12 @@
 <!-- Angular provides a few modules to allow template driven forms.   -->
 <!-- ngForm is used to track the value and validity of the form. It is a built-in directive that is available in the FormsModule -->
 <!-- ngSubmit is a directive that Angular provides to handle form submission. It is used to bind the form submission event to a method in our component -->
-<form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+<form #loginForm="ngForm">
   <div class="mb-3">
     <label for="email" class="form-label">Email address</label>
     <!-- ngModel is a directive used to create a formControl. It is used track the value and validity of the input field. -->
+    <!-- We can use the #email template variable to access the ndModel instance and check for validity of the form control. -->
+    <!-- We can also check to see if the form control is touched, untouched, pristine, Valid, Invalid, etc. -->
     <input
       type="email"
       class="form-control"
@@ -12,9 +14,24 @@
       name="email"
       aria-describedby="emailHelp"
       [(ngModel)]="person.email"
+      #email="ngModel"
+      required
+      email
+      minlength="5"
+      maxlength="20"
     />
-    <div id="emailHelp" class="form-text">
-      We'll never share your email with anyone else.
+    <div
+      *ngIf="email.errors && email.invalid && email.touched"
+      class="text-danger"
+    >
+      <div *ngIf="email.errors['required']">Email is required.</div>
+      <div *ngIf="email.errors['email']">Email is invalid.</div>
+      <div *ngIf="email.errors['minlength']">
+        Please type a minimum of 5 characters
+      </div>
+      <div *ngIf="email.errors['maxlength']">
+        Please type a maximum of 20 characters
+      </div>
     </div>
   </div>
   <div class="mb-3">
@@ -25,6 +42,9 @@
       id="password"
       name="password"
       [(ngModel)]="person.password"
+      #password="ngModel"
+      required
+      minlength="5"
     />
   </div>
   <div class="mb-3 form-check">
@@ -35,11 +55,28 @@
       name="subscribe"
       [(ngModel)]="person.subscribe"
     />
+    <div
+      *ngIf="password.errors && password.invalid && password.touched"
+      class="text-danger"
+    >
+      <div *ngIf="password.errors['required']">Password is required.</div>
+      <div *ngIf="password.errors['password']">Password is invalid.</div>
+      <div *ngIf="password.errors['minlength']">
+        Please type a minimum of 5 characters
+      </div>
+    </div>
     <label class="form-check-label" for="newsletter"
       >Subscribe to a newsletter</label
     >
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button
+    type="submit"
+    class="btn btn-primary"
+    (click)="onSubmit()"
+    [disabled]="!loginForm.valid"
+  >
+    Submit
+  </button>
 </form>
 
 <pre>{{ loginForm.value | json }}</pre>
